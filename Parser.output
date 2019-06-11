@@ -1,0 +1,171 @@
+State 6 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: input $end
+
+    1 input: expr
+
+    2 expr: "!" expr
+    3     | expr "[" expr "]"
+    4     | "word"
+    5     | "(" expr ")"
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+"!" (258) 2
+"[" (259) 3
+"]" (260) 3
+"(" (261) 5
+")" (262) 5
+"word" (263) 4
+
+
+Nonterminals, with rules where they appear
+
+$accept (9)
+    on left: 0
+input (10)
+    on left: 1, on right: 0
+expr (11)
+    on left: 2 3 4 5, on right: 1 2 3 5
+
+
+State 0
+
+    0 $accept: . input $end
+    1 input: . expr
+    2 expr: . "!" expr
+    3     | . expr "[" expr "]"
+    4     | . "word"
+    5     | . "(" expr ")"
+
+    "!"     shift, and go to state 1
+    "("     shift, and go to state 2
+    "word"  shift, and go to state 3
+
+    input  go to state 4
+    expr   go to state 5
+
+
+State 1
+
+    2 expr: . "!" expr
+    2     | "!" . expr
+    3     | . expr "[" expr "]"
+    4     | . "word"
+    5     | . "(" expr ")"
+
+    "!"     shift, and go to state 1
+    "("     shift, and go to state 2
+    "word"  shift, and go to state 3
+
+    expr  go to state 6
+
+
+State 2
+
+    2 expr: . "!" expr
+    3     | . expr "[" expr "]"
+    4     | . "word"
+    5     | . "(" expr ")"
+    5     | "(" . expr ")"
+
+    "!"     shift, and go to state 1
+    "("     shift, and go to state 2
+    "word"  shift, and go to state 3
+
+    expr  go to state 7
+
+
+State 3
+
+    4 expr: "word" .
+
+    $default  reduce using rule 4 (expr)
+
+
+State 4
+
+    0 $accept: input . $end
+
+    $end  shift, and go to state 8
+
+
+State 5
+
+    1 input: expr .  [$end]
+    3 expr: expr . "[" expr "]"
+
+    "["  shift, and go to state 9
+
+    $default  reduce using rule 1 (input)
+
+
+State 6
+
+    2 expr: "!" expr .  [$end, "[", "]", ")"]
+    3     | expr . "[" expr "]"
+
+    "["  shift, and go to state 9
+
+    "["       [reduce using rule 2 (expr)]
+    $default  reduce using rule 2 (expr)
+
+
+State 7
+
+    3 expr: expr . "[" expr "]"
+    5     | "(" expr . ")"
+
+    "["  shift, and go to state 9
+    ")"  shift, and go to state 10
+
+
+State 8
+
+    0 $accept: input $end .
+
+    $default  accept
+
+
+State 9
+
+    2 expr: . "!" expr
+    3     | . expr "[" expr "]"
+    3     | expr "[" . expr "]"
+    4     | . "word"
+    5     | . "(" expr ")"
+
+    "!"     shift, and go to state 1
+    "("     shift, and go to state 2
+    "word"  shift, and go to state 3
+
+    expr  go to state 11
+
+
+State 10
+
+    5 expr: "(" expr ")" .
+
+    $default  reduce using rule 5 (expr)
+
+
+State 11
+
+    3 expr: expr . "[" expr "]"
+    3     | expr "[" expr . "]"
+
+    "["  shift, and go to state 9
+    "]"  shift, and go to state 12
+
+
+State 12
+
+    3 expr: expr "[" expr "]" .
+
+    $default  reduce using rule 3 (expr)

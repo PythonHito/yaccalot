@@ -1,0 +1,14 @@
+Informal
+
+Capitaliser
+
+!word[w]
+
+Grammar rules
+
+S = E
+E = word,'[',letter,{letter},']'
+  | !,word,'[',letter,{letter},']'
+  ;
+word = {letter}
+letter = all the letters
