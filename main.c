@@ -73,9 +73,9 @@ char* evaluate(SExpression *e)
 
 int main(void)
 {
-    char test[] = "(!a)aaablt[l]";
+    char test[100];
+    fgets(test, 100, stdin);
     SExpression *e = getAST(test);
-    printf("alalal");
     char* result = evaluate(e);
     printf("Result of '%s' is %s\n", test, result);
     deleteExpression(e);
